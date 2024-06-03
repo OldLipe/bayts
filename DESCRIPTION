@@ -1,7 +1,7 @@
 Package: bayts
 Title: Probabalistic Approach To Combine Multiple Time Series
 Version: 0.1
-Authors@R: Johannes Reiche <johannes.reiche@wur.nl>
+Authors@R: Johannes
 Description: Probabalistic approach to combine multiple time series and Bayesian probability updating
 Encoding: UTF-8
 Depends: R (>= 4.0.0)

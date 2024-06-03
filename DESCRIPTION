@@ -1,16 +1,13 @@
 Package: bayts
-Title: Probabalistic approach to combine multiple time series and Bayesian probability updating for near real-time
-    forest change detection
+Title: Probabalistic Approach To Combine Multiple Time Series
 Version: 0.1
-Author: Johannes Reiche <johannes.reiche@wur.nl>
-Maintainer: Johannes Reiche <johannes.reiche@wur.nl>
-Description: Probabalistic approach to combine multiple time series and Bayesian probability updating for near real-time
-    forest change detection
-Depends:
-    R (>= 3.1.2),
+Authors@R: Johannes Reiche <johannes.reiche@wur.nl>
+Description: Probabalistic approach to combine multiple time series and Bayesian probability updating
+Encoding: UTF-8
+Depends: R (>= 4.0.0)
+Imports:
     raster,
     bfast,
     zoo
-
-LazyData: true
-RoxygenNote: 5.0.1.9000
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3

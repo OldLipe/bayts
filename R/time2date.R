@@ -15,7 +15,7 @@
 
 time2date <- function(time,format = "%Y-%m-%d"){
   year <- floor(time)
-  jday <- round((time - year) * 365 + 1)
+  jday <- floor((time - year) * 365 + 1)
   jday <- formatC(jday, width = 3, flag = 0)
   dates <- as.Date(paste(year, jday, sep=""), format="%Y%j")
   return(strftime(dates, format = format))

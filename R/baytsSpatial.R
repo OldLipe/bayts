@@ -109,3 +109,38 @@ baytsSpatial <- function(bL = list(NULL,...), datesL=list(NULL,...), pdfL=list(N
   
   return(x)
 }
+
+
+mc.calc <- function(x, fun, mc.cores=1, ...) {
+  
+  if(mc.cores == 1) { # Normal calc
+    out <- calc(x=x, fun=fun, ...)
+    return(out)
+  } else {
+    
+    s <- blockSize(x, minblocks=mc.cores)
+    blocs <- seq(1, s$n)
+    
+    
+    # Create blocks and run the function on that bloc
+    fun2 <- function(i) {
+      e <- extent(x, r1=s$row[i], r2=s$row[i]+s$nrows[i]-1)
+      # tmp <- rasterTmpFile()
+      b <- crop(x, e)
+      out <- calc(x=b, fun=fun) # Does this line need an elipsis
+      return(out)
+    }
+    
+    listOut <- mclapply(X=blocs, FUN=fun2, mc.cores=mc.cores)
+    
+    # Add ALL arguments passed in the ellipsis in the listOut object
+    dots <- list(...)
+    listOut <- c(listOut, dots)
+    
+    listOut$fun <- max
+    out <- do.call(mosaic, listOut)
+    
+    return(out)
+  }
+  
+}

@@ -27,9 +27,7 @@ data(s1vv_lndvi_raster)
 
 # get observation dates from raster brick
 lndvi_date <- as.Date(substr(names(lndvi),10,16), format="%Y%j")
-lndvi_date
 s1vv_date <- as.Date(substr(names(s1vv),2,11), format="%Y.%m.%d")
-s1vv_date
 
 # plot raster
 plot(s1vv,3)    # all areas are covered with forest
@@ -48,7 +46,7 @@ lndviD <- deseasonalizeRaster(lndvi,p=0.95)
 
 plot(s1vv,85)
 cell <- click(s1vv, n=1, cell=TRUE)[,1]
-#cell <- 4264
+cell <- 4264
 
 # create time series using bfastts (bfast package)
 tlndvi <- bfastts(as.vector(lndvi[cell]),lndvi_date,type=c("irregular"))   # original Landsat NDVI
@@ -70,7 +68,10 @@ lndviD <- subset(lndviD, 251:291, drop=FALSE)
 lndvi_date <- lndvi_date[251:291]
 
 # (1) Define parameters 
-# (1a) Sensor specific pdfs of forest (F) and non-foerst (NF). Used to calculate the conditional NF probability of each observation. Gaussian distribution of F and NF distribution. Distributions are described using mean and sd.
+# (1a) Sensor specific pdfs of forest (F) and non-foerst (NF). 
+# Used to calculate the conditional NF probability of each observation. 
+# Gaussian distribution of F and NF distribution. Distributions are described 
+# using mean and sd.
 s1vvD_pdf <- c(c("gaussian","gaussian"),c(-1,0.75),c(-4,1))  
 lndviD_pdf <- c(c("gaussian","gaussian"),c(0,0.1),c(-0.5,0.125))
 
@@ -86,6 +87,6 @@ plot(out,3)
 
 # (3) Apply baytsSpatial using parallel computing; using mc.calc function from bfastSpatial package 
 require(bfastSpatial)
-out2 <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores = 10)
+out2 <- baytsSpatial(list(lndviD),list(lndvi_date),list(lndviD_pdf),chi=chi,start=start,mc.cores = 10)
 # plot confirmed changes
-plot(out2,2)
+plot(out2,3)

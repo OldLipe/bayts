@@ -65,7 +65,8 @@ createBayts <- function (tsL=list(NULL,...), pdfL=list(NULL,...), bwf = c(0.1, 0
       ts2 <- merge.zoo(ts1, calcPNF(ts1[,i], pdfL[[i]], bwf))
       names(ts2)[l+2] <- paste("PNF2")
       #updating PNF using Bayesioan updating
-      ts1$PNF[which(!is.na(ts2$PNF)==!is.na(ts2$PNF2))] <- calcPosterior(ts2$PNF[which(!is.na(ts2$PNF)==!is.na(ts2$PNF2))],ts2$PNF2[which(!is.na(ts2$PNF)==!is.na(ts2$PNF2))])
+      ts1$PNF[which(!is.na(ts2$PNF)==!is.na(ts2$PNF2))] <- calcPosterior(ts2$PNF[which(!is.na(ts2$PNF)==!is.na(ts2$PNF2))],
+                                                                         ts2$PNF2[which(!is.na(ts2$PNF)==!is.na(ts2$PNF2))])
       ts1$PNF[is.na(ts1$PNF)] <- ts2$PNF2[is.na(ts1$PNF)]
       remove(ts2)
     }
